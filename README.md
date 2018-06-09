@@ -3,6 +3,8 @@ River Agents Practice - Intelligent Distributed Systems
 
 ## Installation & Configuration
 
+Set JDK 1.8.x as project SDK.
+
 Run Maven to install all dependencies, by executing
 ```
 mvn install
