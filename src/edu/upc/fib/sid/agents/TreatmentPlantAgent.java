@@ -8,7 +8,7 @@ public class TreatmentPlantAgent extends BaseAgent {
     protected void setup() {
         this.name = "TreatmentPlant";
         this.type = "TreatmentPlant";
-        this.behaviour = new TreatmentPlantBehaviour();
+        this.behaviour = new TreatmentPlantBehaviour(this);
 
         super.setup();
     }

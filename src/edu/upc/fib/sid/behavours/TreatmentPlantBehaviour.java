@@ -24,16 +24,11 @@ public class TreatmentPlantBehaviour extends CyclicBehaviour {
                     reply.setPerformative(ACLMessage.INFORM);
                     reply.setContent("Water received");
                     waterTreated = true;
-            }
-            if (msg.getPerformative() == ACLMessage.INFORM) {
-                reply.setPerformative(ACLMessage.INFORM);
-                reply.setContent("Water received");
-                waterTreated = true;
-            } else {
-                reply.setPerformative(ACLMessage.NOT_UNDERSTOOD);
-                reply.setContent("Needless to say");
-            }
-            myAgent.send(reply);
+                    break;
+                default:
+                    reply.setPerformative(ACLMessage.NOT_UNDERSTOOD);
+                    reply.setContent("Needless to say");
+            } myAgent.send(reply);
 
             if (waterTreated) {
                 msg = new ACLMessage(ACLMessage.INFORM);
