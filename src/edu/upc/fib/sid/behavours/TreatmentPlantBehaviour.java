@@ -8,19 +8,26 @@ import jade.lang.acl.ACLMessage;
 
 public class TreatmentPlantBehaviour extends CyclicBehaviour {
     private AID riverAID;
+    private boolean ready;
 
     public TreatmentPlantBehaviour(Agent agent) {
         super(agent);
         riverAID = DFUtils.getRiverAID(agent);
+        ready = riverAID != null;
     }
 
     public void action() {
-        boolean waterTreated = false;
+        if (!ready) {
+            riverAID = DFUtils.getRiverAID(myAgent);
+            if (!ready) return;
+        }
+
         ACLMessage msg = myAgent.receive();
         if (msg != null) {
             ACLMessage reply = msg.createReply();
+            boolean waterTreated = false;
             switch (msg.getPerformative()) {
-                case ACLMessage.INFORM:
+                case ACLMessage.REQUEST:
                     reply.setPerformative(ACLMessage.INFORM);
                     reply.setContent("Water received");
                     waterTreated = true;
@@ -32,6 +39,7 @@ public class TreatmentPlantBehaviour extends CyclicBehaviour {
 
             if (waterTreated) {
                 msg = new ACLMessage(ACLMessage.INFORM);
+                System.out.println(riverAID);
                 msg.addReceiver(riverAID);
                 msg.setContent("Take this clean water");
                 myAgent.send(msg);

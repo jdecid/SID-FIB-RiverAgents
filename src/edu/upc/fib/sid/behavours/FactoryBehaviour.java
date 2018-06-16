@@ -10,23 +10,19 @@ public class FactoryBehaviour extends TickerBehaviour {
     private AID riverAID;
     private AID treatmentPlantAID;
     private boolean taking = true;
+    private boolean ready = false;
 
     public FactoryBehaviour(Agent agent, long period) {
         super(agent, period);
-        riverAID = DFUtils.getRiverAID(myAgent);
-        treatmentPlantAID = DFUtils.getTreatmentPlantAID(myAgent);
-        if (riverAID == null) {
-            System.err.println("Besòs river not found");
-            // TODO: Throws unexpected error
-            agent.doDelete();
-        } else if (treatmentPlantAID == null) {
-            System.err.println("Treatment plant not found");
-            // TODO: Throws unexpected error
-            agent.doDelete();
-        }
+        getAgentsAIDs();
     }
 
     protected void onTick() {
+        if (!ready) {
+            getAgentsAIDs();
+            if (!ready) return;
+        }
+
         ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
         if (taking) {
             msg.addReceiver(riverAID);
@@ -37,5 +33,15 @@ public class FactoryBehaviour extends TickerBehaviour {
         }
         myAgent.send(msg);
         taking = !taking;
+    }
+
+    private void getAgentsAIDs() {
+        riverAID = DFUtils.getRiverAID(myAgent);
+        treatmentPlantAID = DFUtils.getTreatmentPlantAID(myAgent);
+        if (riverAID == null) {
+            System.err.println("Besòs river not found");
+        } else if (treatmentPlantAID == null) {
+            System.err.println("Treatment plant not found");
+        } else ready = true;
     }
 }
