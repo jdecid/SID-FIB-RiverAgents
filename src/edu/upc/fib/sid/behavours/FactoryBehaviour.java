@@ -10,13 +10,11 @@ import jade.lang.acl.ACLMessage;
 
 public class FactoryOneShotBehaviour extends OneShotBehaviour {
     public void action() {
-        System.out.println("Taking water...");
-
         AID riverAID = getRiverAID();
 
         ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
         msg.addReceiver(riverAID);
-        msg.setContent("I'll be coming for your love, okay?");
+        msg.setContent("Need water");
         myAgent.send(msg);
     }
 
