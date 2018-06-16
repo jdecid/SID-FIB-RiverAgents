@@ -9,14 +9,6 @@ public class RiverBehaviour extends CyclicBehaviour {
         if (msg != null) {
             ACLMessage reply = msg.createReply();
             switch (msg.getPerformative()) {
-                case ACLMessage.INFORM:
-                    reply.setPerformative(ACLMessage.INFORM);
-                    if (msg.getSender().getName().startsWith("Factory")) {
-                        reply.setContent("Water sent properly");
-                    } else {
-                        reply.setContent("Water received properly");
-                    }
-                    break;
                 default:
                     reply.setPerformative(ACLMessage.NOT_UNDERSTOOD);
                     reply.setContent("Needless to say");
