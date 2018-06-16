@@ -10,10 +10,20 @@ import jade.domain.FIPAException;
 
 public class DFUtils {
     public static AID getRiverAID(Agent agent) {
-        DFAgentDescription template = new DFAgentDescription();
         ServiceDescription serviceDescription = new ServiceDescription();
         serviceDescription.setName(Constants.BESOS);
         serviceDescription.setType(Constants.RIVER);
+        return DFUtils.performAIDQuery(agent, serviceDescription);
+    }
+
+    public static AID getTreatmentPlantAID(Agent agent) {
+        ServiceDescription serviceDescription = new ServiceDescription();
+        serviceDescription.setType(Constants.TREATMENT_PLANT);
+        return DFUtils.performAIDQuery(agent, serviceDescription);
+    }
+
+    private static AID performAIDQuery(Agent agent, ServiceDescription serviceDescription) {
+        DFAgentDescription template = new DFAgentDescription();
         template.addServices(serviceDescription);
 
         DFAgentDescription[] results;

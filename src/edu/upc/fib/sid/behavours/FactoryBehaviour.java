@@ -8,12 +8,19 @@ import jade.lang.acl.ACLMessage;
 
 public class FactoryBehaviour extends TickerBehaviour {
     private AID riverAID;
+    private AID treatmentPlantAID;
+    private boolean taking = true;
 
     public FactoryBehaviour(Agent agent, long period) {
         super(agent, period);
-        this.riverAID = DFUtils.getRiverAID(myAgent);
-        if (this.riverAID == null) {
+        riverAID = DFUtils.getRiverAID(myAgent);
+        treatmentPlantAID = DFUtils.getTreatmentPlantAID(myAgent);
+        if (riverAID == null) {
             System.err.println("Besòs river not found");
+            // TODO: Throws unexpected error
+            agent.doDelete();
+        } else if (treatmentPlantAID == null) {
+            System.err.println("Treatment plant not found");
             // TODO: Throws unexpected error
             agent.doDelete();
         }
@@ -21,8 +28,14 @@ public class FactoryBehaviour extends TickerBehaviour {
 
     protected void onTick() {
         ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
-        msg.addReceiver(riverAID);
-        msg.setContent("Need water");
+        if (taking) {
+            msg.addReceiver(riverAID);
+            msg.setContent("Need water");
+        } else {
+            msg.addReceiver(treatmentPlantAID);
+            msg.setContent("Take this waste water");
+        }
         myAgent.send(msg);
+        taking = !taking;
     }
 }
