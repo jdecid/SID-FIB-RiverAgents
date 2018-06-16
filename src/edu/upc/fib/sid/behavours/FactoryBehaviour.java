@@ -1,17 +1,30 @@
 package edu.upc.fib.sid.behavours;
 
+import edu.upc.fib.sid.Constants;
 import jade.core.AID;
-import jade.core.behaviours.OneShotBehaviour;
+import jade.core.Agent;
+import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.SearchConstraints;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 
-public class FactoryOneShotBehaviour extends OneShotBehaviour {
-    public void action() {
-        AID riverAID = getRiverAID();
+public class FactoryBehaviour extends TickerBehaviour {
+    private AID riverAID;
 
+    public FactoryBehaviour(Agent agent, long period) {
+        super(agent, period);
+        this.riverAID = getRiverAID();
+        if (this.riverAID == null) {
+            System.err.println("Besòs river not found");
+            // TODO: Throws unexpected error
+            agent.doDelete();
+        }
+    }
+
+    protected void onTick() {
         ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
         msg.addReceiver(riverAID);
         msg.setContent("Need water");
@@ -20,6 +33,11 @@ public class FactoryOneShotBehaviour extends OneShotBehaviour {
 
     private AID getRiverAID() {
         DFAgentDescription template = new DFAgentDescription();
+        ServiceDescription serviceDescription = new ServiceDescription();
+        serviceDescription.setName(Constants.BESOS);
+        serviceDescription.setType(Constants.RIVER);
+        template.addServices(serviceDescription);
+
         DFAgentDescription[] results;
         try {
             results = DFService.search(myAgent, template, new SearchConstraints());

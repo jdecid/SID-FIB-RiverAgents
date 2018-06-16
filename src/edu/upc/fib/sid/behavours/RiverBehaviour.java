@@ -3,7 +3,7 @@ package edu.upc.fib.sid.behavours;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
-public class RiverCyclicBehaviour extends CyclicBehaviour {
+public class RiverBehaviour extends CyclicBehaviour {
     public void action() {
         ACLMessage msg = myAgent.receive();
         if (msg != null) {
