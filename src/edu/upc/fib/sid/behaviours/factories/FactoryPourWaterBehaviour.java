@@ -19,16 +19,20 @@ public class FactoryPourWaterBehaviour extends OneShotBehaviour {
 
         msg = myAgent.receive();
         if (msg != null) {
-            if (msg.getPerformative() == ACLMessage.CONFIRM) {
-                String senderType = DFUtils.getTypeByAID(myAgent, msg.getSender());
-                if (Constants.TREATMENT_PLANT.equals(senderType)) {
-                    ACLMessage reply = msg.createReply();
-                    reply.setPerformative(ACLMessage.INFORM);
-                    reply.setContent("I pour waste water");
-                    myAgent.send(reply);
+            String senderType = DFUtils.getTypeByAID(myAgent, msg.getSender());
+            if (Constants.TREATMENT_PLANT.equals(senderType)) {
+                if (msg.getPerformative() == ACLMessage.CONFIRM) {
+                    if (Constants.TREATMENT_PLANT.equals(senderType)) {
+                        ACLMessage reply = msg.createReply();
+                        reply.setPerformative(ACLMessage.INFORM);
+                        reply.setContent("I pour waste water");
+                        myAgent.send(reply);
 
-                    ReflectionUtils.findAndInvokeMethod(myAgent, "emptyTank");
-                    LoggerUtils.log(logger, Logger.INFO, "Factory pours water through the sewage system");
+                        ReflectionUtils.findAndInvokeMethod(myAgent, "emptyTank");
+                        LoggerUtils.log(logger, Logger.INFO, "Factory pours water through the sewage system");
+                    }
+                } else if (msg.getPerformative() == ACLMessage.DISCONFIRM) {
+                    LoggerUtils.log(logger, Logger.INFO, "Factory can't pour water through the sewage system");
                 }
             }
         } else block();
