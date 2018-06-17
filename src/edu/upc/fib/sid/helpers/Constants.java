@@ -3,6 +3,7 @@ package edu.upc.fib.sid.helpers;
 public class Constants {
     // Names
     public static final String BESOS = "BESOS";
+    public static final String EDAR_BESOS = "EDAR_BESOS";
 
     // Types
     public static final String RIVER = "RIVER";

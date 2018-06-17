@@ -1,6 +1,7 @@
 package edu.upc.fib.sid.helpers;
 
 import jade.core.AID;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
 
 public class Globals {
     public static AID RiverAID = null;

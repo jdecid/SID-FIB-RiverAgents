@@ -9,7 +9,7 @@ public class RiverAgent extends BaseAgent {
     protected void setup() {
         this.name = Constants.BESOS;
         this.type = Constants.RIVER;
-        this.behaviour = new RiverBehaviour();
+        addBehaviour(new RiverBehaviour());
 
         super.setup();
     }

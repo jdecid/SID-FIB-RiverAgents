@@ -7,9 +7,9 @@ public class TreatmentPlantAgent extends BaseAgent {
 
     @Override
     protected void setup() {
-        this.name = "EDAR";
+        this.name = Constants.EDAR_BESOS;
         this.type = Constants.TREATMENT_PLANT;
-        this.behaviour = new TreatmentPlantMainBehaviour(this);
+        addBehaviour(new TreatmentPlantMainBehaviour(this));
 
         super.setup();
     }

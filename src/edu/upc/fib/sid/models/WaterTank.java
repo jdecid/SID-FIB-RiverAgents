@@ -31,4 +31,12 @@ public class WaterTank {
         currentLevel = 0;
         return litres;
     }
+
+    /**
+     * Checks if water tank is full.
+     * @return True if tank is full.
+     */
+    public boolean isFull() {
+        return currentLevel >= capacity;
+    }
 }

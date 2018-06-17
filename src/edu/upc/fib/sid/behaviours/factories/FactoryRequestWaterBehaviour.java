@@ -8,29 +8,24 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.util.Logger;
 
-public class FactoryPourWaterBehaviour extends OneShotBehaviour {
+public class FactoryRequestWaterBehaviour extends OneShotBehaviour {
     private Logger logger = Logger.getMyLogger(this.getClass().getName());
 
     @Override
     public void action() {
-        ACLMessage msg = new ACLMessage(ACLMessage.QUERY_IF);
-        msg.addReceiver(Globals.TreatmentPlantAID);
-        msg.setContent("Can I pour water?");
+        ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+        msg.addReceiver(Globals.RiverAID);
+        msg.setContent("Need water");
         myAgent.send(msg);
-
-        LoggerUtils.log(logger, Logger.INFO, "Factory queries to pour water through the sewage system");
+        LoggerUtils.log(logger, Logger.INFO, "Factory requests water from the river");
 
         msg = myAgent.receive();
         if (msg != null) {
             if (msg.getPerformative() == ACLMessage.CONFIRM) {
                 String senderType = DFUtils.getTypeByAID(myAgent, msg.getSender());
-                if (Constants.TREATMENT_PLANT.equals(senderType)) {
-                    ACLMessage reply = msg.createReply();
-                    reply.setPerformative(ACLMessage.INFORM);
-                    reply.setContent("I pour waste water");
-                    myAgent.send(reply);
-
-                    LoggerUtils.log(logger, Logger.INFO, "Factory pours water through the sewage system");
+                if (Constants.RIVER.equals(senderType)) {
+                    myAgent.addBehaviour(new FactoryUseWaterBehaviour(myAgent, 3000));
+                    LoggerUtils.log(logger, Logger.INFO, "Factory receives water from the river");
                 }
             }
         } else block();
