@@ -1,7 +1,6 @@
 package edu.upc.fib.sid.behaviours.factories;
 
 import edu.upc.fib.sid.helpers.LoggerUtils;
-import edu.upc.fib.sid.helpers.ReflectionUtils;
 import jade.core.Agent;
 import jade.core.behaviours.WakerBehaviour;
 import jade.util.Logger;
@@ -19,14 +18,8 @@ public class FactoryUseWaterBehaviour extends WakerBehaviour {
     }
 
     public void onWake() {
-        String logMessage;
-        boolean isFull = (boolean)
-                ReflectionUtils.findAndInvokeMethod(myAgent, "stockUpWater", 60);
-        if (!isFull) {
-            myAgent.addBehaviour(new FactoryPourWaterBehaviour());
-            logMessage = "Factory tank capacity is full and will pour water";
-        } else {
-            logMessage = "Factory keeps storing water";
-        } LoggerUtils.log(logger, Logger.INFO, logMessage);
+        myAgent.addBehaviour(new FactoryPourWaterBehaviour());
+        String logMessage = "Factory tank capacity is full and will pour water";
+        LoggerUtils.log(logger, Logger.INFO, logMessage);
     }
 }

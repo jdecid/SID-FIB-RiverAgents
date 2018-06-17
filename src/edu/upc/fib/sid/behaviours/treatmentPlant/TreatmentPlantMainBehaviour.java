@@ -13,18 +13,16 @@ public class TreatmentPlantMainBehaviour extends CyclicBehaviour {
     public void action() {
         ACLMessage msg = myAgent.receive();
         if (msg != null) {
-            ACLMessage reply = msg.createReply();
             boolean waterTreated = false;
             switch (msg.getPerformative()) {
-                case ACLMessage.REQUEST:
-                    /*reply.setPerformative(ACLMessage.INFORM);
-                    reply.setContent("Water received");*/
-                    waterTreated = true;
-                    break;
+                case ACLMessage.INFORM:
+                    waterTreated = true; break;
                 default:
+                    ACLMessage reply = msg.createReply();
                     reply.setPerformative(ACLMessage.NOT_UNDERSTOOD);
                     reply.setContent("Needless to say");
-            } myAgent.send(reply);
+                    myAgent.send(reply);
+            }
 
             if (waterTreated) {
                 myAgent.addBehaviour(new TreatmentPlantPourWaterBehaviour(myAgent, 2000));

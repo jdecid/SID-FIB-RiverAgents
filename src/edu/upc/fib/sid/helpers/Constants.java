@@ -2,9 +2,9 @@ package edu.upc.fib.sid.helpers;
 
 public class Constants {
     // Names
-    public static String BESOS = "BESOS";
+    public static final String BESOS = "BESOS";
 
     // Types
-    public static String RIVER = "RIVER";
-    public static String TREATMENT_PLANT = "TREATMENT_PLANT";
+    public static final String RIVER = "RIVER";
+    public static final String TREATMENT_PLANT = "TREATMENT_PLANT";
 }
