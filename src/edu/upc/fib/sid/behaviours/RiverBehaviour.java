@@ -11,20 +11,20 @@ public class RiverBehaviour extends CyclicBehaviour {
     public void action() {
         ACLMessage msg = myAgent.receive();
         if (msg != null) {
-            ACLMessage reply = msg.createReply();
+            String logMessage = "";
             switch (msg.getPerformative()) {
                 case ACLMessage.REQUEST:
+                    ACLMessage reply = msg.createReply();
                     reply.setPerformative(ACLMessage.CONFIRM);
                     reply.setContent("Take water");
+                    myAgent.send(reply);
 
-                    String logMessage = "River sends water to Factory";
-                    LoggerUtils.log(logger, Logger.INFO, logMessage);
+                    logMessage = "River sends water to Factory";
                     break;
-                default:
-                    reply.setPerformative(ACLMessage.NOT_UNDERSTOOD);
-                    reply.setContent("Needless to say");
+                case ACLMessage.INFORM:
+                    logMessage = "River gets clean water";
             }
-            myAgent.send(reply);
+            LoggerUtils.log(logger, Logger.INFO, logMessage);
         } else block();
     }
 }

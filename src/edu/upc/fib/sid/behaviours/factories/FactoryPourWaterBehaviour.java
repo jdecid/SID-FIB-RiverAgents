@@ -18,6 +18,7 @@ public class FactoryPourWaterBehaviour extends OneShotBehaviour {
             ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
             msg.addReceiver(DFUtils.getTreatmentPlantAID(myAgent));
             msg.setContent("Take this waste water");
+            myAgent.send(msg);
 
             String logMessage = "Factory throws " + litres + "L. through the sewage system";
             LoggerUtils.log(logger, Logger.INFO, logMessage);

@@ -1,7 +1,7 @@
 package edu.upc.fib.sid.agents;
 
 import edu.upc.fib.sid.helpers.Constants;
-import edu.upc.fib.sid.behaviours.TreatmentPlantBehaviour;
+import edu.upc.fib.sid.behaviours.treatmentPlant.TreatmentPlantMainBehaviour;
 
 public class TreatmentPlantAgent extends BaseAgent {
 
@@ -9,7 +9,7 @@ public class TreatmentPlantAgent extends BaseAgent {
     protected void setup() {
         this.name = "EDAR";
         this.type = Constants.TREATMENT_PLANT;
-        this.behaviour = new TreatmentPlantBehaviour(this);
+        this.behaviour = new TreatmentPlantMainBehaviour(this);
 
         super.setup();
     }

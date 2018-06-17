@@ -8,11 +8,11 @@ import jade.core.behaviours.WakerBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.util.Logger;
 
-public class InformReturnTreatedWaterBehaviour extends WakerBehaviour {
+public class TreatmentPlantPourWaterBehaviour extends WakerBehaviour {
     private Logger logger = Logger.getMyLogger(this.getClass().getName());
     private AID riverAID;
 
-    public InformReturnTreatedWaterBehaviour(Agent agent, long timeout) {
+    public TreatmentPlantPourWaterBehaviour(Agent agent, long timeout) {
         super(agent, timeout);
         this.riverAID = DFUtils.getRiverAID(agent);
     }
