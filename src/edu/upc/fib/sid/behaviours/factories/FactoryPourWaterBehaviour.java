@@ -1,9 +1,8 @@
 package edu.upc.fib.sid.behaviours.factories;
 
 import edu.upc.fib.sid.helpers.DFUtils;
+import edu.upc.fib.sid.helpers.Globals;
 import edu.upc.fib.sid.helpers.LoggerUtils;
-import edu.upc.fib.sid.helpers.ReflectionUtils;
-import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.util.Logger;
@@ -13,17 +12,12 @@ public class FactoryPourWaterBehaviour extends OneShotBehaviour {
 
     @Override
     public void action() {
-        try {
-            int litres = (int) ReflectionUtils.findAndInvokeMethod(myAgent, "emptyTank");
-            ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
-            msg.addReceiver(DFUtils.getTreatmentPlantAID(myAgent));
-            msg.setContent("Take this waste water");
-            myAgent.send(msg);
+        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+        msg.addReceiver(Globals.TreatmentPlantAID);
+        msg.setContent("Take this waste water");
+        myAgent.send(msg);
 
-            String logMessage = "Factory throws " + litres + "L. through the sewage system";
-            LoggerUtils.log(logger, Logger.INFO, logMessage);
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
+        String logMessage = "Factory throws water through the sewage system";
+        LoggerUtils.log(logger, Logger.INFO, logMessage);
     }
 }

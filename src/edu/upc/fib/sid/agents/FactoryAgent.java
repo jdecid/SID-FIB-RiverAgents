@@ -1,10 +1,8 @@
 package edu.upc.fib.sid.agents;
 
 import edu.upc.fib.sid.behaviours.factories.FactoryMainBehaviour;
-import edu.upc.fib.sid.models.WaterTank;
 
 public class FactoryAgent extends BaseAgent {
-    private WaterTank waterTank;
 
     @Override
     protected void setup() {
@@ -12,8 +10,7 @@ public class FactoryAgent extends BaseAgent {
         if (args.length > 1) {
             name = args[0].toString();
             type = "Factory";
-            behaviour = new FactoryMainBehaviour(this, 5000);
-            waterTank = new WaterTank(Integer.parseInt(args[1].toString()));
+            behaviour = new FactoryMainBehaviour(this, 10000);
             super.setup();
         } else {
             System.err.println("Factories require a name as first parameter, and tank capacity as second one");
@@ -21,11 +18,4 @@ public class FactoryAgent extends BaseAgent {
         }
     }
 
-    public boolean stockUpWater(Integer litres) {
-        return waterTank.addWater(litres);
-    }
-
-    public int emptyTank() {
-        return waterTank.empty();
-    }
 }

@@ -1,8 +1,7 @@
 package edu.upc.fib.sid.behaviours.treatmentPlant;
 
-import edu.upc.fib.sid.helpers.DFUtils;
+import edu.upc.fib.sid.helpers.Globals;
 import edu.upc.fib.sid.helpers.LoggerUtils;
-import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.WakerBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -10,11 +9,9 @@ import jade.util.Logger;
 
 public class TreatmentPlantPourWaterBehaviour extends WakerBehaviour {
     private Logger logger = Logger.getMyLogger(this.getClass().getName());
-    private AID riverAID;
 
     public TreatmentPlantPourWaterBehaviour(Agent agent, long timeout) {
         super(agent, timeout);
-        this.riverAID = DFUtils.getRiverAID(agent);
     }
 
     public void onStart() {
@@ -24,7 +21,7 @@ public class TreatmentPlantPourWaterBehaviour extends WakerBehaviour {
 
     public void onWake() {
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-        msg.addReceiver(riverAID);
+        msg.addReceiver(Globals.RiverAID);
         msg.setContent("Take this clean water");
         myAgent.send(msg);
 
