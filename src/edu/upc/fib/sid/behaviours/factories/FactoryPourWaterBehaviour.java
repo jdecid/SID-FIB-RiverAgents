@@ -1,9 +1,6 @@
 package edu.upc.fib.sid.behaviours.factories;
 
-import edu.upc.fib.sid.helpers.Constants;
-import edu.upc.fib.sid.helpers.DFUtils;
-import edu.upc.fib.sid.helpers.Globals;
-import edu.upc.fib.sid.helpers.LoggerUtils;
+import edu.upc.fib.sid.helpers.*;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.util.Logger;
@@ -30,6 +27,7 @@ public class FactoryPourWaterBehaviour extends OneShotBehaviour {
                     reply.setContent("I pour waste water");
                     myAgent.send(reply);
 
+                    ReflectionUtils.findAndInvokeMethod(myAgent, "emptyTank");
                     LoggerUtils.log(logger, Logger.INFO, "Factory pours water through the sewage system");
                 }
             }
