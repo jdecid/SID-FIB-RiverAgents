@@ -1,4 +1,4 @@
-package edu.upc.fib.sid;
+package edu.upc.fib.sid.helpers;
 
 public class Constants {
     // Names

@@ -1,4 +1,4 @@
-package edu.upc.fib.sid;
+package edu.upc.fib.sid.helpers;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -30,7 +30,6 @@ public class DFUtils {
         try {
             results = DFService.search(agent, template, new SearchConstraints());
             if (results.length > 0) {
-                System.out.println(results[0].getName());
                 return results[0].getName();
             }
         } catch (FIPAException e) {

@@ -1,6 +1,7 @@
-package edu.upc.fib.sid.behavours;
+package edu.upc.fib.sid.behaviours;
 
-import edu.upc.fib.sid.DFUtils;
+import edu.upc.fib.sid.helpers.DFUtils;
+import edu.upc.fib.sid.behaviours.treatmentPlant.InformReturnTreatedWaterBehaviour;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -38,11 +39,7 @@ public class TreatmentPlantBehaviour extends CyclicBehaviour {
             } myAgent.send(reply);
 
             if (waterTreated) {
-                msg = new ACLMessage(ACLMessage.INFORM);
-                System.out.println(riverAID);
-                msg.addReceiver(riverAID);
-                msg.setContent("Take this clean water");
-                myAgent.send(msg);
+                myAgent.addBehaviour(new InformReturnTreatedWaterBehaviour(myAgent, 2000));
             }
         } else block();
     }

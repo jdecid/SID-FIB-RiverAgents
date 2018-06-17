@@ -1,7 +1,7 @@
 package edu.upc.fib.sid.agents;
 
-import edu.upc.fib.sid.Constants;
-import edu.upc.fib.sid.behavours.RiverBehaviour;
+import edu.upc.fib.sid.helpers.Constants;
+import edu.upc.fib.sid.behaviours.RiverBehaviour;
 
 public class RiverAgent extends BaseAgent {
 
