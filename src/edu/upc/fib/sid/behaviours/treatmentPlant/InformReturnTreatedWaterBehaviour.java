@@ -1,23 +1,28 @@
-package edu.upc.fib.sid.behavours.treatmentPlant;
+package edu.upc.fib.sid.behaviours.treatmentPlant;
 
-import edu.upc.fib.sid.DFUtils;
-import edu.upc.fib.sid.LoggerUtils;
+import edu.upc.fib.sid.helpers.DFUtils;
+import edu.upc.fib.sid.helpers.LoggerUtils;
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.WakerBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.util.Logger;
 
-public class InformReturnTreatedWaterBehaviour extends OneShotBehaviour {
+public class InformReturnTreatedWaterBehaviour extends WakerBehaviour {
     private Logger logger = Logger.getMyLogger(this.getClass().getName());
     private AID riverAID;
 
-    public InformReturnTreatedWaterBehaviour(Agent agent) {
-        super(agent);
+    public InformReturnTreatedWaterBehaviour(Agent agent, long timeout) {
+        super(agent, timeout);
         this.riverAID = DFUtils.getRiverAID(agent);
     }
 
-    public void action() {
+    public void onStart() {
+        String logMessage = "Treatment plant is treating water...";
+        LoggerUtils.log(logger, Logger.INFO, logMessage);
+    }
+
+    public void onWake() {
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
         msg.addReceiver(riverAID);
         msg.setContent("Take this clean water");
