@@ -36,7 +36,7 @@ public class FactoryMainBehaviour extends TickerBehaviour {
 
     private void getAgentsAIDs() {
         riverAID = DFUtils.getRiverAID(myAgent);
-        if (riverAID == null) System.out.println("Besòs river not found");
+        if (riverAID == null) System.err.println("Besòs river not found");
         else ready = true;
     }
 }

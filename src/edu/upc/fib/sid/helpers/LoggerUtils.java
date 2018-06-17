@@ -9,7 +9,7 @@ public class LoggerUtils {
         if (logger.isLoggable(level)) {
             logger.log(level, message);
         } else {
-            System.out.println(level.toString() + "is not loggable.");
+            System.err.println(level.toString() + "is not loggable.");
         }
     }
 }

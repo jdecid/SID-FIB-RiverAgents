@@ -12,7 +12,6 @@ public class FactoryReceiveWaterBehaviour extends OneShotBehaviour {
     public void action() {
         ACLMessage msg = myAgent.receive();
         if (msg != null) {
-            System.out.println(msg.getPerformative());
             if (msg.getPerformative() == ACLMessage.CONFIRM) {
                 myAgent.addBehaviour(new FactoryUseWaterBehaviour(myAgent, 3000));
                 String logMessage = "Factory receives water from the river";
