@@ -13,8 +13,6 @@ public class ReflectionUtils {
             return method.invoke(object, args);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
-
-        }
-        return object;
+        } return object;
     }
 }

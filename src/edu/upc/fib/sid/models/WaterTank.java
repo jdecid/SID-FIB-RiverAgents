@@ -11,15 +11,15 @@ public class WaterTank {
 
     /**
      * Adds water to tank, all possible quantity until it exceeds the capacity.
-     * @return Litres that can't be stocked up in the tank.
+     * @param quantity of water to stock up.
+     * @return True if water quantity exceeds capacity.
      */
-    public int addWater(int quantity) {
+    public boolean addWater(int quantity) {
+        if (currentLevel + quantity > capacity)
+            return true;
+
         currentLevel += quantity;
-        int exceeds = currentLevel - capacity;
-        if (exceeds > 0) {
-            currentLevel = capacity;
-            return exceeds;
-        } return 0;
+        return false;
     }
 
     /**
