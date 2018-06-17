@@ -45,7 +45,7 @@ public class DFUtils {
     public static String getTypeByAID(Agent agent, AID aid) {
         DFAgentDescription[] results;
         try {
-            results = DFService.search(agent, new DFAgentDescription(), new SearchConstraints());
+            results = DFService.search(agent, new DFAgentDescription());
             for (DFAgentDescription result : results) {
                 if (result.getName().getName().equals(aid.getName())) {
                     Iterator services = result.getAllServices();
