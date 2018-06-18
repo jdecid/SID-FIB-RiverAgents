@@ -18,6 +18,15 @@ public class WaterTank {
     }
 
     /**
+     * Substracts water from tank
+     * @param quantity of water to substract
+     */
+    public void substractWater(int quantity) {
+        currentLevel -= quantity;
+        if (currentLevel < 0) currentLevel = 0;
+    }
+
+    /**
      * Empties tank water, leaving its content at 0.
      * @return Litres emptied.
      */

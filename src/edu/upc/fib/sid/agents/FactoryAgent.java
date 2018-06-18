@@ -6,8 +6,8 @@ import edu.upc.fib.sid.models.WaterTank;
 public class FactoryAgent extends BaseAgent {
     private WaterTank cleanWaterTank;
     private WaterTank wasteWaterTank;
-    private Boolean waitingWaterRequest;
-    private Boolean waitingWaterPouring;
+    private Boolean waitingWaterRequest = false;
+    private Boolean waitingWaterPouring = false;
 
     @Override
     protected void setup() {
