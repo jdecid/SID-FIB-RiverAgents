@@ -4,7 +4,10 @@ import edu.upc.fib.sid.behaviours.factories.FactoryMainBehaviour;
 import edu.upc.fib.sid.models.WaterTank;
 
 public class FactoryAgent extends BaseAgent {
-    private WaterTank waterTank;
+    private WaterTank cleanWaterTank;
+    private WaterTank wasteWaterTank;
+    private Boolean waitingWaterRequest;
+    private Boolean waitingWaterPouring;
 
     @Override
     protected void setup() {
@@ -12,7 +15,8 @@ public class FactoryAgent extends BaseAgent {
         if (args.length > 1) {
             name = args[0].toString();
             type = "Factory";
-            waterTank = new WaterTank(Integer.parseInt(args[1].toString()));
+            cleanWaterTank = new WaterTank(Integer.parseInt(args[1].toString()));
+            wasteWaterTank = new WaterTank(Integer.parseInt(args[1].toString()));
             addBehaviour(new FactoryMainBehaviour(this, 5000));
             super.setup();
         } else {
@@ -21,15 +25,27 @@ public class FactoryAgent extends BaseAgent {
         }
     }
 
-    public void stockUpWater(Integer litres) {
-        waterTank.addWater(litres);
+    public WaterTank getCleanWaterTank() {
+        return cleanWaterTank;
     }
 
-    public boolean isTankFull() {
-        return waterTank.isFull();
+    public WaterTank getWasteWaterTank() {
+        return wasteWaterTank;
     }
 
-    public int emptyTank() {
-        return waterTank.empty();
+    public Boolean getWaitingWaterRequest() {
+        return waitingWaterRequest;
+    }
+
+    public void setWaitingWaterRequest(Boolean waitingWaterRequest) {
+        this.waitingWaterRequest = waitingWaterRequest;
+    }
+
+    public Boolean getWaitingWaterPouring() {
+        return waitingWaterPouring;
+    }
+
+    public void setWaitingWaterPouring(Boolean waitingWaterPouring) {
+        this.waitingWaterPouring = waitingWaterPouring;
     }
 }
