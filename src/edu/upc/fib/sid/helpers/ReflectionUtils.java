@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ReflectionUtils {
-    public static Object findAndInvokeMethod(Object object, String methodName, Object... args) {
+    public static Object invokeMethod(Object object, String methodName, Object... args) {
         try {
             Class<?> argsTypes[] = new Class<?>[args.length];
             for (int i = 0; i < argsTypes.length; ++i)

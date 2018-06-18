@@ -2,12 +2,11 @@ package edu.upc.fib.sid.behaviours.factories;
 
 import edu.upc.fib.sid.helpers.DFUtils;
 import edu.upc.fib.sid.helpers.Globals;
-import edu.upc.fib.sid.helpers.ReflectionUtils;
 import edu.upc.fib.sid.models.WaterTank;
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 
-import static edu.upc.fib.sid.helpers.ReflectionUtils.findAndInvokeMethod;
+import static edu.upc.fib.sid.helpers.ReflectionUtils.invokeMethod;
 
 public class FactoryMainBehaviour extends TickerBehaviour {
     private boolean ready = false;
@@ -23,24 +22,24 @@ public class FactoryMainBehaviour extends TickerBehaviour {
             if (!ready) return;
         }
 
-        if(!(Boolean) findAndInvokeMethod(myAgent, "getWaitingWaterRequest") &&
-                !(Boolean) findAndInvokeMethod(myAgent, "getWaitingWaterPouring")) {
+        if(!(Boolean) invokeMethod(myAgent, "getWaitingWaterRequest") &&
+                !(Boolean) invokeMethod(myAgent, "getWaitingWaterPouring")) {
 
-            if(((WaterTank)findAndInvokeMethod(myAgent, "getWasteWaterTank")).isFull()){
-                findAndInvokeMethod(myAgent, "setWaitingWaterPouring", true);
+            if(((WaterTank) invokeMethod(myAgent, "getWasteWaterTank")).isFull()){
+                invokeMethod(myAgent, "setWaitingWaterPouring", true);
                 myAgent.addBehaviour(new FactoryPourWaterBehaviour());
             }
 
-            if(((WaterTank)findAndInvokeMethod(myAgent, "getCleanWaterTank")).isFull()) {
+            if(((WaterTank) invokeMethod(myAgent, "getCleanWaterTank")).isFull()) {
                 /* Utilitzar */
                 int usedWater = 60;
-                ((WaterTank)findAndInvokeMethod(myAgent, "getCleanWaterTank")).substractWater(usedWater);
-                ((WaterTank)findAndInvokeMethod(myAgent, "getWasteWaterTank")).addWater(usedWater);
+                ((WaterTank) invokeMethod(myAgent, "getCleanWaterTank")).substractWater(usedWater);
+                ((WaterTank) invokeMethod(myAgent, "getWasteWaterTank")).addWater(usedWater);
 
             }
             /* Demanar aigua riu */
             else {
-                findAndInvokeMethod(myAgent, "setWaitingWaterRequest", true);
+                invokeMethod(myAgent, "setWaitingWaterRequest", true);
                 myAgent.addBehaviour(new FactoryRequestWaterBehaviour());
             }
 
@@ -48,7 +47,7 @@ public class FactoryMainBehaviour extends TickerBehaviour {
         /*
 
 
-        boolean isFull = (boolean) ReflectionUtils.findAndInvokeMethod(myAgent, "isTankFull");
+        boolean isFull = (boolean) ReflectionUtils.invokeMethod(myAgent, "isTankFull");
         if (isFull) {
             myAgent.addBehaviour(new FactoryPourWaterBehaviour());
         } else {

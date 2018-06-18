@@ -7,7 +7,7 @@ import jade.lang.acl.ACLMessage;
 import jade.util.Logger;
 
 import static edu.upc.fib.sid.helpers.LoggerUtils.log;
-import static edu.upc.fib.sid.helpers.ReflectionUtils.findAndInvokeMethod;
+import static edu.upc.fib.sid.helpers.ReflectionUtils.invokeMethod;
 
 public class FactoryPourWaterBehaviour extends OneShotBehaviour {
     private Logger logger = Logger.getMyLogger(this.getClass().getName());
@@ -34,8 +34,8 @@ public class FactoryPourWaterBehaviour extends OneShotBehaviour {
                     reply.setContent("I pour waste water");
                     myAgent.send(reply);
 
-                    findAndInvokeMethod(myAgent, "setWaitingWaterRequest", Boolean.FALSE);
-                    WaterTank waterTank = (WaterTank) findAndInvokeMethod(myAgent, "getWasteWaterTank");
+                    invokeMethod(myAgent, "setWaitingWaterRequest", Boolean.FALSE);
+                    WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getWasteWaterTank");
                     waterTank.empty();
                     
                     log(logger, Logger.INFO, "Factory pours water through the sewage system");

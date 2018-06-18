@@ -1,17 +1,15 @@
 package edu.upc.fib.sid.behaviours.factories;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import edu.upc.fib.sid.helpers.Constants;
 import edu.upc.fib.sid.helpers.DFUtils;
 import edu.upc.fib.sid.helpers.Globals;
-import edu.upc.fib.sid.helpers.ReflectionUtils;
 import edu.upc.fib.sid.models.WaterTank;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.util.Logger;
 
 import static edu.upc.fib.sid.helpers.LoggerUtils.log;
-import static edu.upc.fib.sid.helpers.ReflectionUtils.findAndInvokeMethod;
+import static edu.upc.fib.sid.helpers.ReflectionUtils.invokeMethod;
 
 public class FactoryRequestWaterBehaviour extends OneShotBehaviour {
     private Logger logger = Logger.getMyLogger(this.getClass().getName());
@@ -32,8 +30,8 @@ public class FactoryRequestWaterBehaviour extends OneShotBehaviour {
         if (msg != null) {
             String senderType = DFUtils.getTypeByAID(myAgent, msg.getSender());
             if (msg.getPerformative() == ACLMessage.CONFIRM && Constants.RIVER.equals(senderType)) {
-                findAndInvokeMethod(myAgent, "setWaitingWaterRequest", Boolean.FALSE);
-                WaterTank waterTank = (WaterTank) findAndInvokeMethod(myAgent, "getCleanWaterTank");
+                invokeMethod(myAgent, "setWaitingWaterRequest", Boolean.FALSE);
+                WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getCleanWaterTank");
                 waterTank.addWater(60);
 
                 log(logger, Logger.INFO, "Factory receives water from the river");
