@@ -24,6 +24,7 @@ public class FactoryRequestWaterBehaviour extends OneShotBehaviour {
             msg.addReceiver(Globals.RiverAID);
             msg.setContent("Need water");
             myAgent.send(msg);
+            messageSent = true;
             log(logger, Logger.INFO, "Factory requests water from the river");
         }
 
