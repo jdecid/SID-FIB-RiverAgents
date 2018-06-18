@@ -18,10 +18,10 @@ public class WaterTank {
     }
 
     /**
-     * Substracts water from tank
-     * @param quantity of water to substract
+     * Subtracts water from tank
+     * @param quantity of water to subtract
      */
-    public void substractWater(int quantity) {
+    public void subtractWater(int quantity) {
         currentLevel -= quantity;
         if (currentLevel < 0) currentLevel = 0;
     }
@@ -42,5 +42,13 @@ public class WaterTank {
      */
     public boolean isFull() {
         return currentLevel >= capacity;
+    }
+
+    /**
+     * Checks if water tank is empty.
+     * @return True if tank is empty.
+     */
+    public boolean isEmpty() {
+        return currentLevel == 0;
     }
 }

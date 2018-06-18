@@ -22,37 +22,28 @@ public class FactoryMainBehaviour extends TickerBehaviour {
             if (!ready) return;
         }
 
-        if(!(Boolean) invokeMethod(myAgent, "getWaitingWaterRequest") &&
-                !(Boolean) invokeMethod(myAgent, "getWaitingWaterPouring")) {
+        Boolean waitingWaterRequest = (Boolean) invokeMethod(myAgent, "getWaitingWaterRequest");
+        Boolean waitingWaterPouring = (Boolean) invokeMethod(myAgent, "getWaitingWaterPouring");
 
-            if(((WaterTank) invokeMethod(myAgent, "getWasteWaterTank")).isFull()){
-                invokeMethod(myAgent, "setWaitingWaterPouring", true);
+        if (!waitingWaterRequest && !waitingWaterPouring) {
+            WaterTank wasteWaterTank = (WaterTank) invokeMethod(myAgent, "getWasteWaterTank");
+            if (wasteWaterTank.isFull()) {
+                invokeMethod(myAgent, "setWaitingWaterPouring", Boolean.TRUE);
                 myAgent.addBehaviour(new FactoryPourWaterBehaviour());
+                return;
             }
 
-            if(((WaterTank) invokeMethod(myAgent, "getCleanWaterTank")).isFull()) {
-                /* Utilitzar */
-                int usedWater = 60;
-                ((WaterTank) invokeMethod(myAgent, "getCleanWaterTank")).substractWater(usedWater);
-                ((WaterTank) invokeMethod(myAgent, "getWasteWaterTank")).addWater(usedWater);
-
-            }
-            /* Demanar aigua riu */
-            else {
-                invokeMethod(myAgent, "setWaitingWaterRequest", true);
-                myAgent.addBehaviour(new FactoryRequestWaterBehaviour());
+            WaterTank cleanWaterTank = (WaterTank) invokeMethod(myAgent, "getCleanWaterTank");
+            if (!cleanWaterTank.isEmpty()) {
+                int usedWater = 50;
+                cleanWaterTank.subtractWater(usedWater);
+                wasteWaterTank.addWater(usedWater);
+                return;
             }
 
-        }
-        /*
-
-
-        boolean isFull = (boolean) ReflectionUtils.invokeMethod(myAgent, "isTankFull");
-        if (isFull) {
-            myAgent.addBehaviour(new FactoryPourWaterBehaviour());
-        } else {
+            invokeMethod(myAgent, "setWaitingWaterRequest", Boolean.TRUE);
             myAgent.addBehaviour(new FactoryRequestWaterBehaviour());
-        }*/
+        }
     }
 
     private void getAgentsAIDs() {

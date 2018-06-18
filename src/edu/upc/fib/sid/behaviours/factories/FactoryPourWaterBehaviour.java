@@ -1,6 +1,8 @@
 package edu.upc.fib.sid.behaviours.factories;
 
-import edu.upc.fib.sid.helpers.*;
+import edu.upc.fib.sid.helpers.Constants;
+import edu.upc.fib.sid.helpers.DFUtils;
+import edu.upc.fib.sid.helpers.Globals;
 import edu.upc.fib.sid.models.WaterTank;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -25,28 +27,26 @@ public class FactoryPourWaterBehaviour extends OneShotBehaviour {
         }
 
         ACLMessage msg = myAgent.receive();
-        if (msg != null) {
-            String senderType = DFUtils.getTypeByAID(myAgent, msg.getSender());
-            if (Constants.TREATMENT_PLANT.equals(senderType)) {
-                if (msg.getPerformative() == ACLMessage.CONFIRM) {
-                    ACLMessage reply = msg.createReply();
-                    reply.setPerformative(ACLMessage.INFORM);
-                    reply.setContent("I pour waste water");
-                    myAgent.send(reply);
-
-                    invokeMethod(myAgent, "setWaitingWaterRequest", Boolean.FALSE);
-                    WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getWasteWaterTank");
-                    waterTank.empty();
-                    
-                    log(logger, Logger.INFO, "Factory pours water through the sewage system");
-                    return;
-                } else if (msg.getPerformative() == ACLMessage.DISCONFIRM) {
-                    log(logger, Logger.INFO, "Factory can't pour water through the sewage system");
-                    messageSent = false;
-                }
-            }
+        while (msg == null) {
+            block();
+            msg = myAgent.receive();
         }
 
-        block();
+        String senderType = DFUtils.getTypeByAID(myAgent, msg.getSender());
+        if (Constants.TREATMENT_PLANT.equals(senderType)) {
+            if (msg.getPerformative() == ACLMessage.CONFIRM) {
+                ACLMessage reply = msg.createReply();
+                reply.setPerformative(ACLMessage.INFORM);
+                reply.setContent("I pour waste water");
+                myAgent.send(reply);
+
+                WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getWasteWaterTank");
+                waterTank.empty();
+
+                log(logger, Logger.INFO, "Factory pours water through the sewage system");
+            } else if (msg.getPerformative() == ACLMessage.DISCONFIRM)
+                log(logger, Logger.INFO, "Factory can't pour water through the sewage system");
+            invokeMethod(myAgent, "setWaitingWaterPouring", Boolean.FALSE);
+        }
     }
 }

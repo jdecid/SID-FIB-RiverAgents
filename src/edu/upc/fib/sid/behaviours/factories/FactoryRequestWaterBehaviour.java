@@ -27,18 +27,18 @@ public class FactoryRequestWaterBehaviour extends OneShotBehaviour {
         }
 
         ACLMessage msg = myAgent.receive();
-        if (msg != null) {
-            String senderType = DFUtils.getTypeByAID(myAgent, msg.getSender());
-            if (msg.getPerformative() == ACLMessage.CONFIRM && Constants.RIVER.equals(senderType)) {
-                invokeMethod(myAgent, "setWaitingWaterRequest", Boolean.FALSE);
-                WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getCleanWaterTank");
-                waterTank.addWater(60);
-
-                log(logger, Logger.INFO, "Factory receives water from the river");
-                return;
-            }
+        while (msg == null) {
+            block();
+            msg = myAgent.receive();
         }
 
-        block();
+        String senderType = DFUtils.getTypeByAID(myAgent, msg.getSender());
+        if (msg.getPerformative() == ACLMessage.CONFIRM && Constants.RIVER.equals(senderType)) {
+            WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getCleanWaterTank");
+            waterTank.addWater(100);
+
+            invokeMethod(myAgent, "setWaitingWaterRequest", Boolean.FALSE);
+            log(logger, Logger.INFO, "Factory receives water from the river");
+        }
     }
 }
