@@ -1,0 +1,403 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#"
+     xml:base="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#action -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#action">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Action"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Factory"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#River"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#TreatmentPlant"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterTank"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#actionInput -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#actionInput">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#action"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#actionOutput -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#actionOutput">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#action"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#hasTank -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#hasTank">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#ownerBy"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AsymmetricProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Factory"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#TreatmentPlant"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterTank"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#hasWaterMass -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#hasWaterMass">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AsymmetricProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterTank"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterMass"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#nextStretch -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#nextStretch">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AsymmetricProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Stretch"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Stretch"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#ownerBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#ownerBy">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AsymmetricProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterTank"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Factory"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#TreatmentPlant"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#action -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#action">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#actionName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#actionName">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#action"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Action"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#positiveInteger"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#biologicalOxygenDemandContaminant -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#biologicalOxygenDemandContaminant">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#contaminant"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#chemicalOxygenDemandContaminant -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#chemicalOxygenDemandContaminant">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#contaminant"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#contaminant -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#contaminant">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterMass"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+                <owl:withRestrictions rdf:parseType="Collection">
+                    <rdf:Description>
+                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.0</xsd:minInclusive>
+                    </rdf:Description>
+                </owl:withRestrictions>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#suspensionSolidContaminant -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#suspensionSolidContaminant">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#contaminant"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#totalNitratesContaminant -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#totalNitratesContaminant">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#contaminant"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#totalSulfatesContaminant -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#totalSulfatesContaminant">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#contaminant"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#volume -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#volume">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterMass"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+                <owl:withRestrictions rdf:parseType="Collection">
+                    <rdf:Description>
+                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.0</xsd:minInclusive>
+                    </rdf:Description>
+                </owl:withRestrictions>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Action -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Action"/>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Cement -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Cement">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Factory"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Factory -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Factory"/>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Metallurgical -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Metallurgical">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Factory"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#PaperMill -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#PaperMill">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Factory"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#RequestPour -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#RequestPour">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Action"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#RequestWater -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#RequestWater">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Action"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#RespondPourRequest -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#RespondPourRequest">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Action"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#ReturnWater -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#ReturnWater">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Action"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#River -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#River"/>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Stretch -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Stretch">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#River"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#SupplyWater -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#SupplyWater">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Action"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Textile -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Textile">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Factory"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#TreatmentPlant -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#TreatmentPlant"/>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterMass -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterMass"/>
+    
+
+
+    <!-- http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterTank -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterTank"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Action"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Factory"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#River"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#TreatmentPlant"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterMass"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterTank"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#Factory"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#River"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#TreatmentPlant"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterMass"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#WaterTank"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#RequestPour"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#RequestWater"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#RespondPourRequest"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#ReturnWater"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/josepdecidrodriguez/ontologies/2018/5/untitled-ontology-17#SupplyWater"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+

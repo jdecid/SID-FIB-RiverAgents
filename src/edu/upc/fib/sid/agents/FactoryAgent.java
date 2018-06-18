@@ -13,7 +13,7 @@ public class FactoryAgent extends BaseAgent {
             name = args[0].toString();
             type = "Factory";
             waterTank = new WaterTank(Integer.parseInt(args[1].toString()));
-            addBehaviour(new FactoryMainBehaviour(this, 10000));
+            addBehaviour(new FactoryMainBehaviour(this, 5000));
             super.setup();
         } else {
             System.err.println("Factories require a name as first parameter, and tank capacity as second one");
