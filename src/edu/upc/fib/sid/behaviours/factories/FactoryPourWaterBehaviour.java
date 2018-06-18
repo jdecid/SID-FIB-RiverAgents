@@ -34,6 +34,7 @@ public class FactoryPourWaterBehaviour extends OneShotBehaviour {
                     reply.setContent("I pour waste water");
                     myAgent.send(reply);
 
+                    findAndInvokeMethod(myAgent, "setWaitingWaterRequest", Boolean.FALSE);
                     WaterTank waterTank = (WaterTank) findAndInvokeMethod(myAgent, "getWasteWaterTank");
                     waterTank.empty();
                     
