@@ -9,6 +9,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.util.Logger;
+import org.apache.jena.base.Sys;
 
 import java.util.Date;
 
@@ -27,6 +28,7 @@ public class TreatmentPlantMainBehaviour extends CyclicBehaviour {
         Boolean waitingNegotiation = (Boolean) invokeMethod(myAgent, "getWaitingNegotiation");
         Boolean waitingClean = (Boolean) invokeMethod(myAgent, "getWaitingClean");
         if (waitingNegotiation || waitingClean) {
+            System.out.println("" + waitingNegotiation + " " + waitingClean);
             return;
         }
 

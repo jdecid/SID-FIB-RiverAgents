@@ -11,7 +11,7 @@ public class FactoryAgent extends BaseAgent {
     private WaterTank wasteWaterTank;
     private Boolean waitingWaterRequest = false;
     private Boolean waitingWaterPouring = false;
-    MessageTemplate mts = MessageTemplate.or(MessageTemplate.MatchPerformative(ACLMessage.CFP),
+    private MessageTemplate mts = MessageTemplate.or(MessageTemplate.MatchPerformative(ACLMessage.CFP),
                           MessageTemplate.or(MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL),
                                              MessageTemplate.MatchPerformative(ACLMessage.REJECT_PROPOSAL)));
 

@@ -1,6 +1,7 @@
 package edu.upc.fib.sid.behaviours.contractNet;
 
 import edu.upc.fib.sid.behaviours.treatmentPlant.TreatmentPlantPourWaterBehaviour;
+import edu.upc.fib.sid.helpers.Globals;
 import edu.upc.fib.sid.models.WaterTank;
 import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
@@ -15,9 +16,17 @@ import static edu.upc.fib.sid.helpers.ReflectionUtils.invokeMethod;
 
 public class RequestPourWaterProposalInitiator extends ContractNetInitiator {
     private Logger logger = Logger.getMyLogger(this.getClass().getName());
+    private int numFactories;
 
     public RequestPourWaterProposalInitiator(Agent agent, ACLMessage cfp) {
         super(agent, cfp);
+        numFactories = Globals.FactoriesAIDs.size();
+    }
+
+    void handleFactory() {
+        numFactories -= 1;
+        if(numFactories <= 0)
+            invokeMethod(myAgent, "setWaitingNegotiation", Boolean.FALSE);
     }
 
     @Override
@@ -36,11 +45,16 @@ public class RequestPourWaterProposalInitiator extends ContractNetInitiator {
     @Override
     protected void handleNotUnderstood(ACLMessage notUnderstood) {
         log(logger, Level.WARNING, "Factory didn't understood message");
+
+        invokeMethod(myAgent, "setWaitingNegotiation", Boolean.FALSE);
     }
 
     @Override
     protected void handleRefuse(ACLMessage refuse) {
+        invokeMethod(myAgent, "setWaitingNegotiation", Boolean.FALSE);
         log(logger, Level.FINE, "Factory rejected proposal");
+        handleFactory();
+
     }
 
     @Override
@@ -51,10 +65,12 @@ public class RequestPourWaterProposalInitiator extends ContractNetInitiator {
         invokeMethod(myAgent, "setWaitingClean", Boolean.TRUE);
         invokeMethod(myAgent, "setWaitingNegotiation", Boolean.FALSE);
         myAgent.addBehaviour(new TreatmentPlantPourWaterBehaviour(myAgent, 1000));
+        handleFactory();
     }
 
     @Override
     protected void handleFailure(ACLMessage failure) {
         log(logger, Level.FINE, "Factory denies to send water");
+        handleFactory();
     }
 }
