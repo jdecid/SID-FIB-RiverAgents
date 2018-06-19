@@ -54,6 +54,7 @@ public class TreatmentPlantMainBehaviour extends CyclicBehaviour {
                         cfp.setContent("Let's talk about water");
                         invokeMethod(myAgent, "setWaitingNegotiation", Boolean.TRUE);
                         myAgent.addBehaviour(new RequestPourWaterProposalInitiator(myAgent, cfp));
+                        log(logger, Logger.INFO, "EDAR starts CFP");
                     }
                 }
             }

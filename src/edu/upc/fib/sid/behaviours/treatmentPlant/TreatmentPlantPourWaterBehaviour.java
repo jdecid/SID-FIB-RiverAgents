@@ -26,11 +26,12 @@ public class TreatmentPlantPourWaterBehaviour extends WakerBehaviour {
         WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getWasteWaterTank");
         waterTank.empty();
 
+        invokeMethod(myAgent, "setWaitingClean", Boolean.FALSE);
+
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
         msg.addReceiver(Globals.RiverAID);
         msg.setContent("Take this clean water");
         myAgent.send(msg);
-
         log(logger, Logger.INFO, "EDAR returns water to the river");
     }
 }
