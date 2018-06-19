@@ -3,6 +3,7 @@ package edu.upc.fib.sid.behaviours.factories;
 import edu.upc.fib.sid.helpers.DFUtils;
 import edu.upc.fib.sid.helpers.Globals;
 import edu.upc.fib.sid.models.WaterTank;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 
@@ -47,8 +48,15 @@ public class FactoryMainBehaviour extends TickerBehaviour {
     }
 
     private void getAgentsAIDs() {
-        Globals.RiverAID = DFUtils.getRiverAID(myAgent);
-        Globals.TreatmentPlantAID = DFUtils.getTreatmentPlantAID(myAgent);
+        if (Globals.RiverAID == null)
+            Globals.RiverAID = DFUtils.getRiverAID(myAgent);
+        if (Globals.TreatmentPlantAID == null)
+            Globals.TreatmentPlantAID = DFUtils.getTreatmentPlantAID(myAgent);
+        
+        AID currentAID = myAgent.getAID();
+        if (!Globals.isFactoryRegistered(currentAID))
+            Globals.FactoriesAIDs.add(currentAID);
+
         if (Globals.RiverAID != null && Globals.TreatmentPlantAID != null) ready = true;
     }
 }

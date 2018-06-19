@@ -1,11 +1,16 @@
 package edu.upc.fib.sid.behaviours.treatmentPlant;
 
 import edu.upc.fib.sid.behaviours.contractNet.RequestPourWaterProposalInitiator;
+import edu.upc.fib.sid.helpers.Globals;
 import edu.upc.fib.sid.models.WaterTank;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.util.Logger;
+
+import java.util.Date;
 
 import static edu.upc.fib.sid.helpers.LoggerUtils.log;
 import static edu.upc.fib.sid.helpers.ReflectionUtils.invokeMethod;
@@ -50,9 +55,13 @@ public class TreatmentPlantMainBehaviour extends CyclicBehaviour {
                         invokeMethod(myAgent, "setWaitingClean", Boolean.TRUE);
                         myAgent.addBehaviour(new TreatmentPlantPourWaterBehaviour(myAgent, 1000));
                     } else {
+                        invokeMethod(myAgent, "setWaitingNegotiation", Boolean.TRUE);
+
                         ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
                         cfp.setContent("Let's talk about water");
-                        invokeMethod(myAgent, "setWaitingNegotiation", Boolean.TRUE);
+                        for (AID receiver : Globals.FactoriesAIDs) cfp.addReceiver(receiver);
+                        cfp.setProtocol(FIPANames.InteractionProtocol.FIPA_CONTRACT_NET);
+                        cfp.setReplyByDate(new Date(System.currentTimeMillis() + 10000));
                         myAgent.addBehaviour(new RequestPourWaterProposalInitiator(myAgent, cfp));
                         log(logger, Logger.INFO, "EDAR starts CFP");
                     }
