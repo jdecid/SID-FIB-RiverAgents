@@ -17,7 +17,7 @@ public class FactoryAgent extends BaseAgent {
             type = "Factory";
             cleanWaterTank = new WaterTank(Integer.parseInt(args[1].toString()));
             wasteWaterTank = new WaterTank(Integer.parseInt(args[1].toString()));
-            addBehaviour(new FactoryMainBehaviour(this, 5000));
+            addBehaviour(new FactoryMainBehaviour(this, 2000));
             super.setup();
         } else {
             System.err.println("Factories require a name as first parameter, and tank capacity as second one");
