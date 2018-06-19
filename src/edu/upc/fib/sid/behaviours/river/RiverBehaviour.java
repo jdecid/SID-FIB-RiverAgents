@@ -1,4 +1,4 @@
-package edu.upc.fib.sid.behaviours;
+package edu.upc.fib.sid.behaviours.river;
 
 import edu.upc.fib.sid.helpers.LoggerUtils;
 import jade.core.behaviours.CyclicBehaviour;
