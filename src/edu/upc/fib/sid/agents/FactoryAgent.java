@@ -1,13 +1,19 @@
 package edu.upc.fib.sid.agents;
 
+import edu.upc.fib.sid.behaviours.contractNet.RequestPourWaterProposalResponder;
 import edu.upc.fib.sid.behaviours.factories.FactoryMainBehaviour;
 import edu.upc.fib.sid.models.WaterTank;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 
 public class FactoryAgent extends BaseAgent {
     private WaterTank cleanWaterTank;
     private WaterTank wasteWaterTank;
     private Boolean waitingWaterRequest = false;
     private Boolean waitingWaterPouring = false;
+    MessageTemplate mts = MessageTemplate.or(MessageTemplate.MatchPerformative(ACLMessage.CFP),
+                          MessageTemplate.or(MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL),
+                                             MessageTemplate.MatchPerformative(ACLMessage.REJECT_PROPOSAL)));
 
     @Override
     protected void setup() {
@@ -18,6 +24,7 @@ public class FactoryAgent extends BaseAgent {
             cleanWaterTank = new WaterTank(Integer.parseInt(args[1].toString()));
             wasteWaterTank = new WaterTank(Integer.parseInt(args[1].toString()));
             addBehaviour(new FactoryMainBehaviour(this, 2000));
+            addBehaviour(new RequestPourWaterProposalResponder(this, mts));
             super.setup();
         } else {
             System.err.println("Factories require a name as first parameter, and tank capacity as second one");

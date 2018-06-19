@@ -61,4 +61,8 @@ public class WaterTank {
         fullness = Math.min(fullness, 100);
         return Math.max(0, fullness);
     }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
 }
