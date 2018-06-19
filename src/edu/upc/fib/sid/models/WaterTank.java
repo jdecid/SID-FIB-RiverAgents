@@ -65,4 +65,8 @@ public class WaterTank {
     public int getCurrentLevel() {
         return currentLevel;
     }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
 }

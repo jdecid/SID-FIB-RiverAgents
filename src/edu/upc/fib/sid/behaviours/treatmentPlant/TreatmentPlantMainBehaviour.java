@@ -2,19 +2,21 @@ package edu.upc.fib.sid.behaviours.treatmentPlant;
 
 import edu.upc.fib.sid.behaviours.contractNet.RequestPourWaterProposalInitiator;
 import edu.upc.fib.sid.helpers.Globals;
+import edu.upc.fib.sid.helpers.MessageUtils;
 import edu.upc.fib.sid.models.WaterTank;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import jade.util.Logger;
-import org.apache.jena.base.Sys;
 
 import java.util.Date;
 
 import static edu.upc.fib.sid.helpers.LoggerUtils.log;
 import static edu.upc.fib.sid.helpers.ReflectionUtils.invokeMethod;
+import static jade.lang.acl.MessageTemplate.*;
 
 public class TreatmentPlantMainBehaviour extends CyclicBehaviour {
     private Logger logger = Logger.getMyLogger(this.getClass().getName());
@@ -27,48 +29,59 @@ public class TreatmentPlantMainBehaviour extends CyclicBehaviour {
     public void action() {
         Boolean waitingNegotiation = (Boolean) invokeMethod(myAgent, "getWaitingNegotiation");
         Boolean waitingClean = (Boolean) invokeMethod(myAgent, "getWaitingClean");
-        if (waitingNegotiation || waitingClean) {
-            System.out.println("" + waitingNegotiation + " " + waitingClean);
-            return;
+        if (waitingNegotiation || waitingClean) return;
+
+        MessageTemplate mt = and(not(MatchSender(Globals.RiverAID)),
+                or(MatchPerformative(ACLMessage.QUERY_IF), MatchPerformative(ACLMessage.INFORM)));
+        ACLMessage msg = myAgent.receive(mt);
+        while (msg == null) {
+            block();
+            msg = myAgent.receive();
         }
 
-        ACLMessage msg = myAgent.receive();
-        if (msg != null) {
-            WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getWasteWaterTank");
-            if (msg.getPerformative() == ACLMessage.QUERY_IF) {
-                ACLMessage reply = msg.createReply();
-                if (waterTank.hasEnoughCapacity(pendingValue + 50)) {
-                    reply.setPerformative(ACLMessage.CONFIRM);
-                    reply.setContent("OK, pour water");
-                    pendingValue += 50;
-                    log(logger, Logger.INFO, "EDAR allows Factory to pour water");
-                } else {
-                    reply.setPerformative(ACLMessage.DISCONFIRM);
-                    reply.setContent("Nope, don't pour water");
-                    log(logger, Logger.INFO, "EDAR disallows Factory to pour water");
-                }
-                myAgent.send(reply);
-            } else if (msg.getPerformative() == ACLMessage.INFORM) {
-                waterTank.addWater(50);
-                pendingValue -= 50;
-                log(logger, Logger.INFO, "Factory pours 50L to EDAR");
-                if (waterTank.getFullnessPercent() > 50) {
-                    if (waterTank.isFull()) {
-                        invokeMethod(myAgent, "setWaitingClean", Boolean.TRUE);
-                        myAgent.addBehaviour(new TreatmentPlantPourWaterBehaviour(myAgent, 1000));
-                    } else {
-                        invokeMethod(myAgent, "setWaitingNegotiation", Boolean.TRUE);
+        WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getWasteWaterTank");
+        Integer quantity = Integer.valueOf(msg.getContent());
 
-                        ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
-                        cfp.setContent("Let's talk about water");
-                        for (AID receiver : Globals.FactoriesAIDs) cfp.addReceiver(receiver);
-                        cfp.setProtocol(FIPANames.InteractionProtocol.FIPA_CONTRACT_NET);
-                        cfp.setReplyByDate(new Date(System.currentTimeMillis() + 10000));
-                        myAgent.addBehaviour(new RequestPourWaterProposalInitiator(myAgent, cfp));
-                        log(logger, Logger.INFO, "EDAR starts CFP");
-                    }
+        if (msg.getPerformative() == ACLMessage.QUERY_IF) {
+            ACLMessage reply = msg.createReply();
+            if (waterTank.hasEnoughCapacity(pendingValue + quantity)) {
+                reply.setPerformative(ACLMessage.CONFIRM);
+                reply.setContent(String.valueOf(quantity));
+
+                pendingValue += quantity;
+                log(logger, Logger.INFO, String.format(
+                        "EDAR allows Factory %s to pour water", msg.getSender().getLocalName()));
+            } else {
+                reply.setPerformative(ACLMessage.DISCONFIRM);
+                log(logger, Logger.INFO, String.format(
+                        "EDAR disallows Factory %s to pour water", msg.getSender().getLocalName()));
+            }
+            myAgent.send(reply);
+        } else if (msg.getPerformative() == ACLMessage.INFORM) {
+            waterTank.addWater(quantity);
+            pendingValue -= quantity;
+            log(logger, Logger.INFO, String.format(
+                    "EDAR receives %dL from Factory %s", quantity, msg.getSender().getLocalName()));
+
+            if (waterTank.getFullnessPercent() > 50) {
+                if (waterTank.isFull()) {
+                    invokeMethod(myAgent, "setWaitingClean", Boolean.TRUE);
+                    myAgent.addBehaviour(new TreatmentPlantReturnWaterBehaviour(myAgent, 1000));
+                } else {
+                    invokeMethod(myAgent, "setWaitingNegotiation", Boolean.TRUE);
+                    Integer remainingWater = waterTank.getCapacity() - waterTank.getCurrentLevel();
+
+                    ACLMessage cfp = MessageUtils.createMessage(ACLMessage.CFP, null);
+                    cfp.setContent(String.valueOf(remainingWater));
+                    cfp.setProtocol(FIPANames.InteractionProtocol.FIPA_CONTRACT_NET);
+                    cfp.setReplyByDate(new Date(System.currentTimeMillis() + 2000));
+                    for (AID receiver : Globals.FactoriesAIDs) cfp.addReceiver(receiver);
+
+                    myAgent.addBehaviour(new RequestPourWaterProposalInitiator(myAgent, cfp));
+                    log(logger, Logger.INFO, String.format(
+                            "EDAR starts CFP with %d Factories", Globals.FactoriesAIDs.size()));
                 }
             }
-        } else block();
+        }
     }
 }

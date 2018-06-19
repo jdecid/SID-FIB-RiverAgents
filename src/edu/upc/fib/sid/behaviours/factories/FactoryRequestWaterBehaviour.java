@@ -1,15 +1,16 @@
 package edu.upc.fib.sid.behaviours.factories;
 
-import edu.upc.fib.sid.helpers.Constants;
-import edu.upc.fib.sid.helpers.DFUtils;
 import edu.upc.fib.sid.helpers.Globals;
+import edu.upc.fib.sid.helpers.MessageUtils;
 import edu.upc.fib.sid.models.WaterTank;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import jade.util.Logger;
 
 import static edu.upc.fib.sid.helpers.LoggerUtils.log;
 import static edu.upc.fib.sid.helpers.ReflectionUtils.invokeMethod;
+import static jade.lang.acl.MessageTemplate.*;
 
 public class FactoryRequestWaterBehaviour extends OneShotBehaviour {
     private Logger logger = Logger.getMyLogger(this.getClass().getName());
@@ -17,28 +18,30 @@ public class FactoryRequestWaterBehaviour extends OneShotBehaviour {
 
     @Override
     public void action() {
+        WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getCleanWaterTank");
+
         if (!messageSent) {
-            ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
-            msg.addReceiver(Globals.RiverAID);
-            msg.setContent("Need water");
+            ACLMessage msg = MessageUtils.createMessage(ACLMessage.REQUEST, Globals.RiverAID);
+            msg.setContent(String.valueOf(waterTank.getCapacity()));
             myAgent.send(msg);
+
             messageSent = true;
-            log(logger, Logger.INFO, "Factory requests water from the river");
+            log(logger, Logger.INFO, String.format(
+                    "Factory %s requests %dL from the river",
+                    msg.getSender().getLocalName(), waterTank.getCapacity()));
         }
 
-        ACLMessage msg = myAgent.receive();
+        MessageTemplate mt = and(MatchPerformative(ACLMessage.CONFIRM), MatchSender(Globals.RiverAID));
+        ACLMessage msg = myAgent.receive(mt);
         while (msg == null) {
             block();
             msg = myAgent.receive();
         }
 
-        String senderType = DFUtils.getTypeByAID(myAgent, msg.getSender());
-        if (msg.getPerformative() == ACLMessage.CONFIRM && Constants.RIVER.equals(senderType)) {
-            WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getCleanWaterTank");
-            waterTank.addWater(100);
-
-            invokeMethod(myAgent, "setWaitingWaterRequest", Boolean.FALSE);
-            log(logger, Logger.INFO, "Factory receives water from the river");
-        }
+        Integer waterQuantity = Integer.valueOf(msg.getContent());
+        invokeMethod(myAgent, "addWaterFromRiver", waterQuantity);
+        log(logger, Logger.INFO, String.format(
+                "Factory %s receives %dL from the river",
+                msg.getSender().getLocalName(), waterQuantity));
     }
 }

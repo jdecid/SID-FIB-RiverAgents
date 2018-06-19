@@ -8,4 +8,6 @@ public class Constants {
     // Types
     public static final String RIVER = "RIVER";
     public static final String TREATMENT_PLANT = "TREATMENT_PLANT";
+
+    public static final Integer WATER = 50;
 }

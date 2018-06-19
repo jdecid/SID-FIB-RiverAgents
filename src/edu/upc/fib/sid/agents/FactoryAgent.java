@@ -7,6 +7,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 public class FactoryAgent extends BaseAgent {
+    private Integer processCost;
     private WaterTank cleanWaterTank;
     private WaterTank wasteWaterTank;
     private Boolean waitingWaterRequest = false;
@@ -18,11 +19,13 @@ public class FactoryAgent extends BaseAgent {
     @Override
     protected void setup() {
         Object[] args = getArguments();
-        if (args.length > 1) {
+        if (args.length > 3) {
             name = args[0].toString();
             type = "Factory";
             cleanWaterTank = new WaterTank(Integer.parseInt(args[1].toString()));
-            wasteWaterTank = new WaterTank(Integer.parseInt(args[1].toString()));
+            wasteWaterTank = new WaterTank(Integer.parseInt(args[2].toString()));
+            processCost = Integer.parseInt(args[3].toString());
+
             addBehaviour(new FactoryMainBehaviour(this, 2000));
             addBehaviour(new RequestPourWaterProposalResponder(this, mts));
             super.setup();
@@ -30,6 +33,10 @@ public class FactoryAgent extends BaseAgent {
             System.err.println("Factories require a name as first parameter, and tank capacity as second one");
             this.doDelete();
         }
+    }
+
+    public Integer getProcessCost() {
+        return processCost;
     }
 
     public WaterTank getCleanWaterTank() {
@@ -54,5 +61,15 @@ public class FactoryAgent extends BaseAgent {
 
     public void setWaitingWaterPouring(Boolean waitingWaterPouring) {
         this.waitingWaterPouring = waitingWaterPouring;
+    }
+
+    public void addWaterFromRiver(Integer quantity) {
+        this.cleanWaterTank.addWater(quantity);
+        this.waitingWaterRequest = Boolean.FALSE;
+    }
+
+    public void pourWaterToPlant() {
+        this.wasteWaterTank.empty();
+        this.waitingWaterPouring = Boolean.FALSE;
     }
 }

@@ -1,7 +1,7 @@
 package edu.upc.fib.sid.behaviours.treatmentPlant;
 
 import edu.upc.fib.sid.helpers.Globals;
-import edu.upc.fib.sid.helpers.LoggerUtils;
+import edu.upc.fib.sid.helpers.MessageUtils;
 import edu.upc.fib.sid.models.WaterTank;
 import jade.core.Agent;
 import jade.core.behaviours.WakerBehaviour;
@@ -11,10 +11,10 @@ import jade.util.Logger;
 import static edu.upc.fib.sid.helpers.LoggerUtils.log;
 import static edu.upc.fib.sid.helpers.ReflectionUtils.invokeMethod;
 
-public class TreatmentPlantPourWaterBehaviour extends WakerBehaviour {
+public class TreatmentPlantReturnWaterBehaviour extends WakerBehaviour {
     private Logger logger = Logger.getMyLogger(this.getClass().getName());
 
-    public TreatmentPlantPourWaterBehaviour(Agent agent, long timeout) {
+    public TreatmentPlantReturnWaterBehaviour(Agent agent, long timeout) {
         super(agent, timeout);
     }
 
@@ -28,10 +28,8 @@ public class TreatmentPlantPourWaterBehaviour extends WakerBehaviour {
 
         invokeMethod(myAgent, "setWaitingClean", Boolean.FALSE);
 
-        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-        msg.addReceiver(Globals.RiverAID);
-        msg.setContent("Take this clean water");
-        myAgent.send(msg);
+        ACLMessage msg = MessageUtils.createMessage(ACLMessage.INFORM, Globals.RiverAID);
         log(logger, Logger.INFO, "EDAR returns water to the river");
+        myAgent.send(msg);
     }
 }
