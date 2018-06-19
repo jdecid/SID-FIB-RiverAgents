@@ -38,7 +38,7 @@ public class TreatmentPlantMainBehaviour extends CyclicBehaviour {
                 waterTank.addWater(50);
                 pendingValue -= 50;
                 log(logger, Logger.INFO, "Factory pours 50L to EDAR");
-                if (waterTank.isFull()) {
+                if (waterTank.getFullnessPercent() > 50) {
                     myAgent.addBehaviour(new TreatmentPlantPourWaterBehaviour(myAgent, 1000));
                 }
             }

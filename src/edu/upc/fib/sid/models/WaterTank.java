@@ -55,4 +55,10 @@ public class WaterTank {
     public boolean hasEnoughCapacity(Integer quantity) {
         return currentLevel + quantity <= capacity;
     }
+
+    public int getFullnessPercent() {
+        Integer fullness = 100 * currentLevel / capacity;
+        fullness = Math.min(fullness, 100);
+        return Math.max(0, fullness);
+    }
 }
