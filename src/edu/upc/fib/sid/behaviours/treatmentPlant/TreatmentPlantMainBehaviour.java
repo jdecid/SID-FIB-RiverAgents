@@ -1,5 +1,6 @@
 package edu.upc.fib.sid.behaviours.treatmentPlant;
 
+import edu.upc.fib.sid.behaviours.contractNet.RequestPourWaterProposalInitiator;
 import edu.upc.fib.sid.models.WaterTank;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -18,6 +19,12 @@ public class TreatmentPlantMainBehaviour extends CyclicBehaviour {
     }
 
     public void action() {
+        Boolean waitingNegotiation = (Boolean) invokeMethod(myAgent, "getWaitingNegotiation");
+        Boolean waitingClean = (Boolean) invokeMethod(myAgent, "getWaitingClean");
+        if (waitingNegotiation || waitingClean) {
+            return;
+        }
+
         ACLMessage msg = myAgent.receive();
         if (msg != null) {
             WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getWasteWaterTank");
@@ -39,7 +46,15 @@ public class TreatmentPlantMainBehaviour extends CyclicBehaviour {
                 pendingValue -= 50;
                 log(logger, Logger.INFO, "Factory pours 50L to EDAR");
                 if (waterTank.getFullnessPercent() > 50) {
-                    myAgent.addBehaviour(new TreatmentPlantPourWaterBehaviour(myAgent, 1000));
+                    if (waterTank.isFull()) {
+                        invokeMethod(myAgent, "setWaitingClean", Boolean.TRUE);
+                        myAgent.addBehaviour(new TreatmentPlantPourWaterBehaviour(myAgent, 1000));
+                    } else {
+                        ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
+                        cfp.setContent("Let's talk about water");
+                        invokeMethod(myAgent, "setWaitingNegotiation", Boolean.TRUE);
+                        myAgent.addBehaviour(new RequestPourWaterProposalInitiator(myAgent, cfp));
+                    }
                 }
             }
         } else block();

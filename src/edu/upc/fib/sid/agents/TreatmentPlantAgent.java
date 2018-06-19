@@ -6,6 +6,8 @@ import edu.upc.fib.sid.models.WaterTank;
 
 public class TreatmentPlantAgent extends BaseAgent {
     private WaterTank wasteWaterTank;
+    private Boolean waitingNegotiation = false;
+    private Boolean waitingClean = false;
 
     @Override
     protected void setup() {
@@ -24,5 +26,21 @@ public class TreatmentPlantAgent extends BaseAgent {
 
     public WaterTank getWasteWaterTank() {
         return wasteWaterTank;
+    }
+
+    public Boolean getWaitingNegotiation() {
+        return waitingNegotiation;
+    }
+
+    public void setWaitingNegotiation(Boolean waitingNegotiation) {
+        this.waitingNegotiation = waitingNegotiation;
+    }
+
+    public Boolean getWaitingClean() {
+        return waitingClean;
+    }
+
+    public void setWaitingClean(Boolean waitingClean) {
+        this.waitingClean = waitingClean;
     }
 }
