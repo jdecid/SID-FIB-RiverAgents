@@ -2,6 +2,8 @@ package edu.upc.fib.sid.agents;
 
 import edu.upc.fib.sid.helpers.DFUtils;
 import edu.upc.fib.sid.helpers.Globals;
+import edu.upc.fib.sid.ontology.BesosRiverOntology;
+import jade.content.lang.sl.SLCodec;
 import jade.core.Agent;
 import jade.core.Service;
 import jade.core.behaviours.Behaviour;
@@ -9,6 +11,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
+import jade.domain.FIPANames;
 import jade.util.leap.Iterator;
 
 abstract class BaseAgent extends Agent {
@@ -31,5 +34,8 @@ abstract class BaseAgent extends Agent {
         } catch (FIPAException e) {
             e.printStackTrace();
         }
+
+        getContentManager().registerLanguage(new SLCodec(), FIPANames.ContentLanguage.FIPA_SL0);
+        getContentManager().registerOntology(BesosRiverOntology.getInstance());
     }
 }
