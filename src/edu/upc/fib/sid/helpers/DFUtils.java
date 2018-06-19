@@ -8,11 +8,17 @@ import jade.domain.FIPAAgentManagement.SearchConstraints;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.util.leap.Iterator;
-import org.apache.jena.base.Sys;
 
-import static jade.tools.sniffer.Agent.i;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DFUtils {
+    private static Map<AID, String> mem;
+
+    static {
+        mem = new HashMap<>();
+    }
+
     public static AID getRiverAID(Agent agent) {
         ServiceDescription serviceDescription = new ServiceDescription();
         serviceDescription.setName(Constants.BESOS);
@@ -43,6 +49,10 @@ public class DFUtils {
     }
 
     public static String getTypeByAID(Agent agent, AID aid) {
+        if (mem.containsKey(aid)) {
+            return mem.get(aid);
+        }
+
         DFAgentDescription[] results;
         try {
             results = DFService.search(agent, new DFAgentDescription());
@@ -51,12 +61,15 @@ public class DFUtils {
                     Iterator services = result.getAllServices();
                     if (services.hasNext()) {
                         ServiceDescription element = (ServiceDescription) services.next();
-                        return element.getType();
+                        mem.put(aid, element.getType());
+                        return mem.get(aid);
                     }
                 }
             }
         } catch (FIPAException e) {
             e.printStackTrace();
-        } return null;
+        }
+
+        return null;
     }
 }
