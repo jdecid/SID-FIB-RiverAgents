@@ -4,7 +4,7 @@ public class WaterTank {
     private int currentLevel;
     private final int capacity;
 
-    public WaterTank(int capacity) {
+    public WaterTank(Integer capacity) {
         this.capacity = capacity;
         this.currentLevel = 0;
     }
@@ -13,7 +13,7 @@ public class WaterTank {
      * Adds water to tank, all possible quantity until it exceeds the capacity.
      * @param quantity of water to stock up.
      */
-    public void addWater(int quantity) {
+    public void addWater(Integer quantity) {
         currentLevel += quantity;
     }
 
@@ -21,7 +21,7 @@ public class WaterTank {
      * Subtracts water from tank
      * @param quantity of water to subtract
      */
-    public void subtractWater(int quantity) {
+    public void subtractWater(Integer quantity) {
         currentLevel -= quantity;
         if (currentLevel < 0) currentLevel = 0;
     }
@@ -50,5 +50,9 @@ public class WaterTank {
      */
     public boolean isEmpty() {
         return currentLevel == 0;
+    }
+
+    public boolean hasEnoughCapacity(Integer quantity) {
+        return currentLevel + quantity <= capacity;
     }
 }
