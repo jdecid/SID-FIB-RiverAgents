@@ -67,6 +67,8 @@ public class RequestPourWaterProposalInitiator extends ContractNetInitiator {
             System.out.println("Accepting proposal '" + bestProposal + "' from responder '" + bestProposer.getName() + "'");
             accept.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
         }
+        else
+            invokeMethod(myAgent, "setWaitingNegotiation", Boolean.FALSE);
     }
 
     @Override

@@ -30,7 +30,8 @@ public class FactoryAgent extends BaseAgent {
             addBehaviour(new RequestPourWaterProposalResponder(this, mts));
             super.setup();
         } else {
-            System.err.println("Factories require a name as first parameter, and tank capacity as second one");
+            System.err.println("Factories require a name as first parameter, a cleanTank capacity as second one, " +
+                    "a wasteTank capacity as third one, and a processCost as fourth one.");
             this.doDelete();
         }
     }
