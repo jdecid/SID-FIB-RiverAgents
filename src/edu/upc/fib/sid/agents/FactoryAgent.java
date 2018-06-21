@@ -1,7 +1,9 @@
 package edu.upc.fib.sid.agents;
 
 import edu.upc.fib.sid.behaviours.contractNet.RequestPourWaterProposalResponder;
+import edu.upc.fib.sid.behaviours.factories.FactoryBypassBehaviour;
 import edu.upc.fib.sid.behaviours.factories.FactoryMainBehaviour;
+import edu.upc.fib.sid.helpers.Globals;
 import edu.upc.fib.sid.models.WaterTank;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -10,11 +12,12 @@ public class FactoryAgent extends BaseAgent {
     private Integer processCost;
     private WaterTank cleanWaterTank;
     private WaterTank wasteWaterTank;
+    private Boolean isRaining = false;
     private Boolean waitingWaterRequest = false;
     private Boolean waitingWaterPouring = false;
     private MessageTemplate mts = MessageTemplate.or(MessageTemplate.MatchPerformative(ACLMessage.CFP),
-                          MessageTemplate.or(MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL),
-                                             MessageTemplate.MatchPerformative(ACLMessage.REJECT_PROPOSAL)));
+            MessageTemplate.or(MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL),
+                    MessageTemplate.MatchPerformative(ACLMessage.REJECT_PROPOSAL)));
 
     @Override
     protected void setup() {
@@ -28,6 +31,9 @@ public class FactoryAgent extends BaseAgent {
 
             addBehaviour(new FactoryMainBehaviour(this, 2000));
             addBehaviour(new RequestPourWaterProposalResponder(this, mts));
+
+            Globals.FactoriesInstances.add(this);
+
             super.setup();
         } else {
             System.err.println("Factories require a name as first parameter, a cleanTank capacity as second one, " +
@@ -72,5 +78,13 @@ public class FactoryAgent extends BaseAgent {
     public void pourWaterToPlant() {
         this.wasteWaterTank.empty();
         this.waitingWaterPouring = Boolean.FALSE;
+    }
+
+    public Boolean getRaining() {
+        return isRaining;
+    }
+
+    public void setRaining(Boolean raining) {
+        isRaining = raining;
     }
 }

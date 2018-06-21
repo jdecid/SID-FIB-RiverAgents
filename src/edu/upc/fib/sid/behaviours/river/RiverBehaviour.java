@@ -20,12 +20,12 @@ public class RiverBehaviour extends CyclicBehaviour {
         ACLMessage msg = myAgent.receive(mt);
         while (msg == null) {
             block();
-            msg = myAgent.receive();
+            msg = myAgent.receive(mt);
         }
 
         if (msg.getPerformative() == ACLMessage.REQUEST) {
             Integer quantity = Integer.valueOf(msg.getContent());
-            ACLMessage reply = MessageUtils.createMessage(ACLMessage.INFORM, msg.getSender());
+            ACLMessage reply = MessageUtils.createMessage(ACLMessage.CONFIRM, msg.getSender());
             reply.setContent(String.valueOf(quantity));
             myAgent.send(reply);
             log(logger, Logger.INFO, String.format(

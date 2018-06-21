@@ -36,7 +36,7 @@ public class TreatmentPlantMainBehaviour extends CyclicBehaviour {
         ACLMessage msg = myAgent.receive(mt);
         while (msg == null) {
             block();
-            msg = myAgent.receive();
+            msg = myAgent.receive(mt);
         }
 
         WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getWasteWaterTank");

@@ -1,6 +1,5 @@
 package edu.upc.fib.sid.behaviours.factories;
 
-import edu.upc.fib.sid.helpers.Constants;
 import edu.upc.fib.sid.helpers.DFUtils;
 import edu.upc.fib.sid.helpers.Globals;
 import edu.upc.fib.sid.models.WaterTank;

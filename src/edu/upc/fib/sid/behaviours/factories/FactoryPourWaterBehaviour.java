@@ -19,7 +19,20 @@ public class FactoryPourWaterBehaviour extends OneShotBehaviour {
     @Override
     public void action() {
         WaterTank waterTank = (WaterTank) invokeMethod(myAgent, "getWasteWaterTank");
+        Boolean isRaining = (Boolean) invokeMethod(myAgent, "getRaining");
         Integer currentLevel = waterTank.getCurrentLevel();
+
+        if (isRaining) {
+            ACLMessage msg = MessageUtils.createMessage(ACLMessage.INFORM, Globals.RiverAID);
+            msg.setContent(String.valueOf(currentLevel));
+            myAgent.send(msg);
+
+            invokeMethod(myAgent, "pourWaterToPlant");
+            log(logger, Logger.INFO, String.format(
+                    "Factory %s pours %dL directly to the river",
+                    myAgent.getLocalName(), currentLevel));
+            return;
+        }
 
         if (!messageSent) {
             ACLMessage msg = MessageUtils.createMessage(ACLMessage.QUERY_IF, Globals.TreatmentPlantAID);
@@ -37,7 +50,7 @@ public class FactoryPourWaterBehaviour extends OneShotBehaviour {
         ACLMessage msg = myAgent.receive(mt);
         while (msg == null) {
             block();
-            msg = myAgent.receive();
+            msg = myAgent.receive(mt);
         }
 
         if (msg.getPerformative() == ACLMessage.CONFIRM) {

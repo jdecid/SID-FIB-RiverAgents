@@ -35,7 +35,7 @@ public class FactoryRequestWaterBehaviour extends OneShotBehaviour {
         ACLMessage msg = myAgent.receive(mt);
         while (msg == null) {
             block();
-            msg = myAgent.receive();
+            msg = myAgent.receive(mt);
         }
 
         Integer waterQuantity = Integer.valueOf(msg.getContent());
