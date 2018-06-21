@@ -26,7 +26,7 @@ public class RiverRainBehaviour extends TickerBehaviour {
     @Override
     protected void onTick() {
         Random random = new Random();
-        Integer r = random.nextInt(2);
+        Integer r = random.nextInt(5);
         Boolean isRaining = r == 0;
         log(logger, Level.INFO, isRaining ? "It's  raining!" : "It's not raining");
 

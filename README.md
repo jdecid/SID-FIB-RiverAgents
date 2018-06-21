@@ -18,3 +18,11 @@ Mark Directory as > Sources Root (it will appear in blue).
 
 Create an application run configuration that uses ``jade.Boot`` as main class.
 Set ``-gui`` as program arguments.
+
+#### Example run usage
+
+Following initialization can be used as test example:
+
+```
+jade.Boot -gui Besos:edu.upc.fib.sid.agents.RiverAgent;EDAR:edu.upc.fib.sid.agents.TreatmentPlantAgent(1000);F1:edu.upc.fib.sid.agents.FactoryAgent(factory_1,400,100,25);F2:edu.upc.fib.sid.agents.FactoryAgent(factory_2,100,50,10);snif:jade.tools.sniffer.Sniffer
+```
